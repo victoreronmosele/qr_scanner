@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanner_go/pages/scan_page.dart';
+import 'package:scanner_go/pages/home/home_page.dart';
 
 void main() {
   runApp(const ScannerApp());
@@ -17,19 +17,5 @@ class ScannerApp extends StatelessWidget {
       ),
       home: const HomePage(),
     );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const ScanPage();
   }
 }
