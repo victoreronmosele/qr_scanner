@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class ScanPage extends StatelessWidget {
-  const ScanPage({
+class ScanTab extends StatelessWidget {
+  const ScanTab({
     Key? key,
   }) : super(key: key);
 
