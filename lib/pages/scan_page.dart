@@ -9,6 +9,13 @@ class ScanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text('Scanner Go'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Center(
           child: QRView(
               key: GlobalKey(debugLabel: 'QR'),
