@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:scanner_go/pages/scan_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ScannerApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ScannerApp extends StatelessWidget {
+  const ScannerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'QR Scanner',
+      title: 'Scanner Go',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -29,8 +30,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(),
-    );
+    return const ScanPage();
   }
 }
