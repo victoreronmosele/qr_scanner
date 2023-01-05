@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:scanner_go/resources/strings.dart';
 
 class ScanTab extends StatelessWidget {
   const ScanTab({
@@ -11,7 +12,7 @@ class ScanTab extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Scanner Go'),
+        title: const Text(appTitle),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,

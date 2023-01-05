@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_go/pages/home/home_page.dart';
+import 'package:scanner_go/resources/strings.dart';
 
 void main() {
   runApp(const ScannerApp());
@@ -11,7 +12,7 @@ class ScannerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Scanner Go',
+      title: appTitle,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
