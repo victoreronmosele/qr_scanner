@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanner_go/pages/home/home_page.dart';
+import 'package:scanner_go/ui/pages/home/home_page.dart';
 import 'package:scanner_go/resources/strings.dart';
 
 void main() {
