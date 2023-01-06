@@ -55,19 +55,28 @@ class _ScanTabState extends ConsumerState<ScanTab> {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: scannedBarcodeResult != null
-                  ? Container(
-                      color: darkBackgroundColor,
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              scannedBarcodeResult!.code ?? noResultFound,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                            Container(
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: accentColor, width: 2),
                               ),
-                              textAlign: TextAlign.center,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  scannedBarcodeResult!.code ?? noResultFound,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                             const SizedBox(height: 20),
                             TextButton(
