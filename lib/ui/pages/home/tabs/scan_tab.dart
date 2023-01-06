@@ -43,25 +43,29 @@ class _ScanTabState extends State<ScanTab> {
         elevation: 0,
       ),
       body: Center(
-          child: QRView(
-              key: GlobalKey(debugLabel: 'QR'),
-              onQRViewCreated: (controller) {
-                this.controller = controller;
+        child: QRView(
+          key: GlobalKey(debugLabel: 'QR'),
+          onQRViewCreated: (controller) {
+            this.controller = controller;
 
-                /// Resume camera if it was paused by leaving the screen or by
-                /// some other means
-                controller.resumeCamera();
-                controller.scannedDataStream.listen((scanData) {});
-              },
-              onPermissionSet: (controller, hasPermissions) {
-                print('Has permissions: $hasPermissions');
-              },
-              overlay: QrScannerOverlayShape(
-                borderColor: qrBorderColor,
-                borderRadius: 10,
-                borderLength: 30,
-                borderWidth: 10,
-              ))),
+            /// Resume camera if it was paused by leaving the screen or by
+            /// some other means
+            controller.resumeCamera();
+            controller.scannedDataStream.listen((scanData) {});
+          },
+          onPermissionSet: (controller, hasPermissions) {},
+          overlay: QrScannerOverlayShape(
+            borderColor: qrBorderColor,
+            borderRadius: 10,
+            borderLength: 30,
+            borderWidth: 10,
+          ),
+          formatsAllowed: const [
+            BarcodeFormat.qrcode,
+          ],
+
+        ),
+      ),
     );
   }
 
