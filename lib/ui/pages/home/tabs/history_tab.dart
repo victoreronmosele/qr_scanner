@@ -12,56 +12,55 @@ class HistoryTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<QRScanResult> scannedQRCodes = ref.watch(scannedQRCodesProvider);
+    final scannedQRCodes = ref.watch(scannedQRCodesProvider);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      backgroundColor: darkBackgroundColor,
-      appBar: AppBar(
-        title: const Text(
-          historyTabTitle,
+        extendBodyBehindAppBar: true,
+        backgroundColor: darkBackgroundColor,
+        appBar: AppBar(
+          title: const Text(
+            historyTabTitle,
+          ),
+          backgroundColor: elevatedWidgetBackgroundColor,
+          centerTitle: true,
         ),
-        backgroundColor: elevatedWidgetBackgroundColor,
-        centerTitle: true,
-      ),
-      body: scannedQRCodes.isEmpty
-          ? const Center(
-              child: Text(
-                noQrCodesScannedYet,
-              ),
-            )
-          : Padding(
-              padding: EdgeInsets.only(top: listViewTopPadding),
-              child: ListView.builder(
-                itemCount: scannedQRCodes.length,
-                itemBuilder: (context, index) {
-                  /// Sort the list of scanned QR codes by the time of scan
-                  /// in reverse chronological order so that the most recent
-                  /// scan is at the top.
-                  scannedQRCodes.sort(
-                      (a, b) => a.timeOfScan.isBefore(b.timeOfScan) ? 1 : 0);
+        body: scannedQRCodes.isEmpty
+            ? const Center(
+                child: Text(
+                  noQrCodesScannedYet,
+                ),
+              )
+            : Padding(
+                padding: EdgeInsets.only(top: listViewTopPadding),
+                child: ListView.builder(
+                  itemCount: scannedQRCodes.length,
+                  itemBuilder: (context, index) {
+                    /// Sort the list of scanned QR codes by the time of scan
+                    /// in reverse chronological order so that the most recent
+                    /// scan is at the top.
+                    scannedQRCodes.sort(
+                        (a, b) => a.timeOfScan.isBefore(b.timeOfScan) ? 1 : 0);
 
-                  final scannedQRCode = scannedQRCodes[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: ListTile(
-                      title: Text(
-                        scannedQRCode.code ?? noResultFound,
-                        style: Theme.of(context).textTheme.button,
-                        textAlign: TextAlign.start,
+                    final scannedQRCode = scannedQRCodes[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: ListTile(
+                        title: Text(
+                          scannedQRCode.code ?? noResultFound,
+                          style: Theme.of(context).textTheme.button,
+                          textAlign: TextAlign.start,
+                        ),
+                        subtitle: Text(
+                          '$scannedAt ${scannedQRCode.timeOfScan.toHumanReadableFormat()}',
+                          style: Theme.of(context).textTheme.caption,
+                          textAlign: TextAlign.start,
+                        ),
+                        tileColor: elevatedWidgetBackgroundColor,
                       ),
-                      subtitle: Text(
-                        '$scannedAt ${scannedQRCode.timeOfScan.toHumanReadableFormat()}',
-                        style: Theme.of(context).textTheme.caption,
-                        textAlign: TextAlign.start,
-                      ),
-                      tileColor: elevatedWidgetBackgroundColor,
-                    ),
-                  );
-                },
-              ),
-            ),
-    );
+                    );
+                  },
+                ),
+              ));
   }
 }

@@ -65,6 +65,7 @@ class _ScanTabState extends ConsumerState<ScanTab> {
                               color: Colors.white,
                               fontSize: 20,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 20),
                           TextButton(
@@ -94,12 +95,15 @@ class _ScanTabState extends ConsumerState<ScanTab> {
                       controller.resumeCamera();
 
                       controller.scannedDataStream.listen((scanData) {
-                        ref.read(scannedQRCodesProvider).add(
-                              QRScanResult(
-                                code: scanData.code,
-                                timeOfScan: DateTime.now(),
-                              ),
-                            );
+                        final scannedQRCode = QRScanResult(
+                          code: scanData.code,
+                          timeOfScan: DateTime.now(),
+                        );
+
+                        ref
+                            .read(scannedQRCodesProvider.notifier)
+                            .saveQRCode(scannedQRCode);
+
                         setState(() {
                           scannedBarcodeResult = scanData;
                         });

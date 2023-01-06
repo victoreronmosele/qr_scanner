@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
@@ -19,10 +21,26 @@ class QRScanResult {
   String toString() {
     return 'QRScanResult{code: $code, id: $id}';
   }
+
+  /// Creates a [QRScanResult] from a JSON string.
+  QRScanResult.fromJsonString(String jsonString)
+      : this._fromJson(json.decode(jsonString));
+
+  /// Creates a [QRScanResult] from a JSON map.
+  QRScanResult._fromJson(Map<String, dynamic> jsonMap)
+      : code = jsonMap['code'],
+        id = jsonMap['id'],
+        timeOfScan = DateTime.parse(jsonMap['timeOfScan']);
+
+  /// Converts the [QRScanResult] to a JSON string.
+  String toJsonString() => json.encode({
+        'code': code,
+        'id': id,
+        'timeOfScan': timeOfScan.toIso8601String(),
+      });
 }
 
 /// Extends the [DateTime] class with a method to format the date and time.
-/// The format is: "yMEd".
 extension HumanReadableDateTime on DateTime {
   String toHumanReadableFormat() {
     return DateFormat.yMEd().add_jms().format(this);
