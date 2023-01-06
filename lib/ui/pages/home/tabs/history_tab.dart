@@ -14,6 +14,8 @@ class HistoryTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scannedQRCodes = ref.watch(scannedQRCodesProvider);
 
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: darkBackgroundColor,
@@ -42,22 +44,29 @@ class HistoryTab extends ConsumerWidget {
                         (a, b) => a.timeOfScan.isBefore(b.timeOfScan) ? 1 : 0);
 
                     final scannedQRCode = scannedQRCodes[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
-                      child: ListTile(
-                        title: Text(
-                          scannedQRCode.code ?? noResultFound,
-                          style: Theme.of(context).textTheme.button,
-                          textAlign: TextAlign.start,
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: ListTile(
+                            title: Text(
+                              scannedQRCode.code ?? noResultFound,
+                              style: Theme.of(context).textTheme.button,
+                              textAlign: TextAlign.start,
+                            ),
+                            subtitle: Text(
+                              '$scannedAt ${scannedQRCode.timeOfScan.toHumanReadableFormat()}',
+                              style: Theme.of(context).textTheme.caption,
+                              textAlign: TextAlign.start,
+                            ),
+                            tileColor: elevatedWidgetBackgroundColor,
+                          ),
                         ),
-                        subtitle: Text(
-                          '$scannedAt ${scannedQRCode.timeOfScan.toHumanReadableFormat()}',
-                          style: Theme.of(context).textTheme.caption,
-                          textAlign: TextAlign.start,
-                        ),
-                        tileColor: elevatedWidgetBackgroundColor,
-                      ),
+                        /// Buffer for bottom app bar covering the last item
+                        if (index == scannedQRCodes.length - 1)
+                          SizedBox(height: screenHeight / 5),
+                      ],
                     );
                   },
                 ),
