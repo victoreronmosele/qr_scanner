@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_go/resources/colors.dart';
+import 'package:scanner_go/ui/pages/home/tabs/models/tab_info.dart';
 
 /// Holds the bottom app bar for the home page.
 ///
@@ -12,7 +13,7 @@ class ScannerGoBottomAppBar extends StatelessWidget {
   /// The index of the tab is passed as an argument.
   final void Function(int) onTabChange;
 
-  final List<Tab> tabs;
+  final List<TabInfo> tabs;
 
   final bottomAppBarHorizontalPadding = 40.0;
 
@@ -31,7 +32,12 @@ class ScannerGoBottomAppBar extends StatelessWidget {
               indicator: const BoxDecoration(),
               labelColor: primaryColor,
               unselectedLabelColor: unselectedTabColor,
-              tabs: tabs,
+              onTap: onTabChange,
+              tabs: tabs
+                  .map((e) => Tab(
+                        icon: Icon(e.icon),
+                      ))
+                  .toList(),
             ),
           ),
         ),
