@@ -80,9 +80,12 @@ class _ScanTabState extends ConsumerState<ScanTab> {
                                 /// another barcode.
                                 controller?.resumeCamera();
                               },
-                              child: const Text(
+                              child: Text(
                                 tapToScan,
-                                style: TextStyle(color: accentColor),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    ?.copyWith(color: accentColor),
                               ),
                             ),
                           ],
