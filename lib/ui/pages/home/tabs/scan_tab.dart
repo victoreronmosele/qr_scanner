@@ -26,7 +26,7 @@ class ScanTab extends StatelessWidget {
               },
               onPermissionSet: (controller, hasPermissions) {},
               overlay: QrScannerOverlayShape(
-                borderColor: primaryColor,
+                borderColor: qrBorderColor,
                 borderRadius: 10,
                 borderLength: 30,
                 borderWidth: 10,

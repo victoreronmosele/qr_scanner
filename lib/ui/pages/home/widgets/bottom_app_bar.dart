@@ -30,7 +30,7 @@ class ScannerGoBottomAppBar extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TabBar(
               indicator: const BoxDecoration(),
-              labelColor: primaryColor,
+              labelColor: selectedTabColor,
               unselectedLabelColor: unselectedTabColor,
               onTap: onTabChange,
               tabs: tabs
