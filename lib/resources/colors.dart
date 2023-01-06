@@ -19,5 +19,3 @@ final darkBackgroundColor =
 
 final elevatedWidgetBackgroundColor =
     Color.alphaBlend(Colors.white.withOpacity(0.05), darkBackgroundColor);
-
-

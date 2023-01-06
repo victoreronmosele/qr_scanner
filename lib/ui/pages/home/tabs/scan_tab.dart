@@ -1,20 +1,23 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:scanner_go/models/qr_scan_result.dart';
+import 'package:scanner_go/providers/scanned_qr_codes_provider.dart';
 import 'package:scanner_go/resources/colors.dart';
 import 'package:scanner_go/resources/strings.dart';
 
-class ScanTab extends StatefulWidget {
+class ScanTab extends ConsumerStatefulWidget {
   const ScanTab({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ScanTab> createState() => _ScanTabState();
+  ConsumerState createState() => _ScanTabState();
 }
 
-class _ScanTabState extends State<ScanTab> {
+class _ScanTabState extends ConsumerState<ScanTab> {
   /// Controller for the QR scanner.
   QRViewController? controller;
 
@@ -91,6 +94,11 @@ class _ScanTabState extends State<ScanTab> {
                       controller.resumeCamera();
 
                       controller.scannedDataStream.listen((scanData) {
+                        ref.read(scannedQRCodesProvider).add(
+                              QRScanResult(
+                                code: scanData.code,
+                              ),
+                            );
                         setState(() {
                           scannedBarcodeResult = scanData;
                         });
