@@ -7,3 +7,4 @@ const historyTabTitle = 'History';
 const noResultFound = 'No result found';
 const noQrCodesScannedYet = 'No QR codes scanned yet';
 const scanAnotherBarCode = 'Scan another barcode';
+const scannedAt = 'Scanned at';

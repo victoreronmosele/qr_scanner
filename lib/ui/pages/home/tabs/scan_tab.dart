@@ -97,6 +97,7 @@ class _ScanTabState extends ConsumerState<ScanTab> {
                         ref.read(scannedQRCodesProvider).add(
                               QRScanResult(
                                 code: scanData.code,
+                                timeOfScan: DateTime.now(),
                               ),
                             );
                         setState(() {

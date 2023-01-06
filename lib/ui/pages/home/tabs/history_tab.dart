@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:scanner_go/models/qr_scan_result.dart';
 import 'package:scanner_go/providers/scanned_qr_codes_provider.dart';
 import 'package:scanner_go/resources/colors.dart';
 import 'package:scanner_go/resources/strings.dart';
@@ -11,7 +12,7 @@ class HistoryTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scannedQRCodes = ref.watch(scannedQRCodesProvider);
+    final List<QRScanResult> scannedQRCodes = ref.watch(scannedQRCodesProvider);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -34,13 +35,25 @@ class HistoryTab extends ConsumerWidget {
               child: ListView.builder(
                 itemCount: scannedQRCodes.length,
                 itemBuilder: (context, index) {
+                  /// Sort the list of scanned QR codes by the time of scan
+                  /// in reverse chronological order so that the most recent
+                  /// scan is at the top.
+                  scannedQRCodes.sort(
+                      (a, b) => a.timeOfScan.isBefore(b.timeOfScan) ? 1 : 0);
+
                   final scannedQRCode = scannedQRCodes[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
                     child: ListTile(
                       title: Text(
                         scannedQRCode.code ?? noResultFound,
                         style: Theme.of(context).textTheme.button,
+                        textAlign: TextAlign.start,
+                      ),
+                      subtitle: Text(
+                        '$scannedAt ${scannedQRCode.timeOfScan.toHumanReadableFormat()}',
+                        style: Theme.of(context).textTheme.caption,
                         textAlign: TextAlign.start,
                       ),
                       tileColor: elevatedWidgetBackgroundColor,
