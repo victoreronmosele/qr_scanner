@@ -52,77 +52,83 @@ class _ScanTabState extends ConsumerState<ScanTab> {
       body: Center(
         child: Stack(
           children: [
-            scannedBarcodeResult != null
-                ? Container(
-                    color: darkBackgroundColor,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            scannedBarcodeResult!.code ?? noResultFound,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: scannedBarcodeResult != null
+                  ? Container(
+                      color: darkBackgroundColor,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              scannedBarcodeResult!.code ?? noResultFound,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 20),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                scannedBarcodeResult = null;
-                              });
+                            const SizedBox(height: 20),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  scannedBarcodeResult = null;
+                                });
 
-                              /// Resume the camera when the user wants to scan
-                              /// another barcode.
-                              controller?.resumeCamera();
-                            },
-                            child: const Text(scanAnotherBarCode),
-                          ),
-                        ],
+                                /// Resume the camera when the user wants to scan
+                                /// another barcode.
+                                controller?.resumeCamera();
+                              },
+                              child: const Text(
+                                tapToScan,
+                                style: TextStyle(color: accentColor),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                : QRView(
-                    key: GlobalKey(debugLabel: 'QR'),
-                    onQRViewCreated: (controller) async {
-                      /// Store the controller so we can pause/resume the camera.
-                      this.controller = controller;
+                    )
+                  : QRView(
+                      key: GlobalKey(debugLabel: 'QR'),
+                      onQRViewCreated: (controller) async {
+                        /// Store the controller so we can pause/resume the camera.
+                        this.controller = controller;
 
-                      /// Resume camera if it was paused by leaving the screen or by
-                      /// some other means
-                      controller.resumeCamera();
+                        /// Resume camera if it was paused by leaving the screen or by
+                        /// some other means
+                        controller.resumeCamera();
 
-                      controller.scannedDataStream.listen((scanData) {
-                        final scannedQRCode = QRScanResult(
-                          code: scanData.code,
-                          timeOfScan: DateTime.now(),
-                        );
+                        controller.scannedDataStream.listen((scanData) {
+                          final scannedQRCode = QRScanResult(
+                            code: scanData.code,
+                            timeOfScan: DateTime.now(),
+                          );
 
-                        ref
-                            .read(scannedQRCodesProvider.notifier)
-                            .saveQRCode(scannedQRCode);
+                          ref
+                              .read(scannedQRCodesProvider.notifier)
+                              .saveQRCode(scannedQRCode);
 
-                        setState(() {
-                          scannedBarcodeResult = scanData;
+                          setState(() {
+                            scannedBarcodeResult = scanData;
+                          });
+
+                          /// Pause the camera when a barcode is scanned.
+                          controller.pauseCamera();
                         });
-
-                        /// Pause the camera when a barcode is scanned.
-                        controller.pauseCamera();
-                      });
-                    },
-                    onPermissionSet: (controller, hasPermissions) {},
-                    overlay: QrScannerOverlayShape(
-                      borderColor: qrBorderColor,
-                      borderRadius: 10,
-                      borderLength: 30,
-                      borderWidth: 10,
+                      },
+                      onPermissionSet: (controller, hasPermissions) {},
+                      overlay: QrScannerOverlayShape(
+                        borderColor: qrBorderColor,
+                        borderRadius: 10,
+                        borderLength: 30,
+                        borderWidth: 10,
+                      ),
+                      formatsAllowed: const [
+                        BarcodeFormat.qrcode,
+                      ],
                     ),
-                    formatsAllowed: const [
-                      BarcodeFormat.qrcode,
-                    ],
-                  ),
+            ),
           ],
         ),
       ),
