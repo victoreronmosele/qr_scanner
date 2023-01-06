@@ -15,7 +15,11 @@ class ScanTab extends StatefulWidget {
 }
 
 class _ScanTabState extends State<ScanTab> {
+  /// Controller for the QR scanner.
   QRViewController? controller;
+
+  /// The result of the barcode scan.
+  Barcode? scannedBarcodeResult;
 
   /// This is needed for development purposes only.
   ///
@@ -43,27 +47,70 @@ class _ScanTabState extends State<ScanTab> {
         elevation: 0,
       ),
       body: Center(
-        child: QRView(
-          key: GlobalKey(debugLabel: 'QR'),
-          onQRViewCreated: (controller) {
-            this.controller = controller;
+        child: Stack(
+          children: [
+            scannedBarcodeResult != null
+                ? Container(
+                    color: darkBackgroundColor,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            scannedBarcodeResult!.code ?? 'No result found',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                scannedBarcodeResult = null;
+                              });
 
-            /// Resume camera if it was paused by leaving the screen or by
-            /// some other means
-            controller.resumeCamera();
-            controller.scannedDataStream.listen((scanData) {});
-          },
-          onPermissionSet: (controller, hasPermissions) {},
-          overlay: QrScannerOverlayShape(
-            borderColor: qrBorderColor,
-            borderRadius: 10,
-            borderLength: 30,
-            borderWidth: 10,
-          ),
-          formatsAllowed: const [
-            BarcodeFormat.qrcode,
+                              /// Resume the camera when the user wants to scan
+                              /// another barcode.
+                              controller?.resumeCamera();
+                            },
+                            child: const Text('Scan another barcode'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : QRView(
+                    key: GlobalKey(debugLabel: 'QR'),
+                    onQRViewCreated: (controller) async {
+                      /// Store the controller so we can pause/resume the camera.
+                      this.controller = controller;
+
+                      /// Resume camera if it was paused by leaving the screen or by
+                      /// some other means
+                      controller.resumeCamera();
+
+                      controller.scannedDataStream.listen((scanData) {
+                        setState(() {
+                          scannedBarcodeResult = scanData;
+                        });
+
+                        /// Pause the camera when a barcode is scanned.
+                        controller.pauseCamera();
+                      });
+                    },
+                    onPermissionSet: (controller, hasPermissions) {},
+                    overlay: QrScannerOverlayShape(
+                      borderColor: qrBorderColor,
+                      borderRadius: 10,
+                      borderLength: 30,
+                      borderWidth: 10,
+                    ),
+                    formatsAllowed: const [
+                      BarcodeFormat.qrcode,
+                    ],
+                  ),
           ],
-
         ),
       ),
     );

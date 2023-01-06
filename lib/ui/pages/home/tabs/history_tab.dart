@@ -9,12 +9,12 @@ class HistoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: historyTabBackgroundColor,
+      backgroundColor: darkBackgroundColor,
       appBar: AppBar(
         title: const Text(
           historyTabTitle,
         ),
-        backgroundColor: historyTabBackgroundColor,
+        backgroundColor: darkBackgroundColor,
         centerTitle: true,
       ),
       body: const Center(

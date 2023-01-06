@@ -15,5 +15,5 @@ const qrBorderColor = _accentColor;
 const darkModeBaseColor = Color(0xff121212);
 
 /// Tab colors
-final historyTabBackgroundColor =
+final darkBackgroundColor =
     Color.alphaBlend(_primaryColor.withOpacity(0.08), darkModeBaseColor);
