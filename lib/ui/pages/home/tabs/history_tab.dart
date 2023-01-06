@@ -26,7 +26,7 @@ class HistoryTab extends ConsumerWidget {
       body: scannedQRCodes.isEmpty
           ? const Center(
               child: Text(
-                'No QR codes scanned yet',
+                noQrCodesScannedYet,
               ),
             )
           : Padding(
@@ -39,7 +39,7 @@ class HistoryTab extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: ListTile(
                       title: Text(
-                        scannedQRCode.code,
+                        scannedQRCode.code ?? noResultFound,
                         style: Theme.of(context).textTheme.button,
                         textAlign: TextAlign.start,
                       ),

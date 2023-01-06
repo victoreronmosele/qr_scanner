@@ -57,7 +57,7 @@ class _ScanTabState extends State<ScanTab> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            scannedBarcodeResult!.code ?? 'No result found',
+                            scannedBarcodeResult!.code ?? noResultFound,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -74,7 +74,7 @@ class _ScanTabState extends State<ScanTab> {
                               /// another barcode.
                               controller?.resumeCamera();
                             },
-                            child: const Text('Scan another barcode'),
+                            child: const Text(scanAnotherBarCode),
                           ),
                         ],
                       ),
