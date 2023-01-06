@@ -1,16 +1,26 @@
-# qr_scanner_demo
+# Scanner Go
 
-A new Flutter project.
+## Description
+
+This is an app that allows you scan any QR Code and easily see its content, together with a history of all previously scanned QR Codes. 
+
+It is built with Flutter.
+
+## Features
+
+- Scan QR Code
+- View QR Code content
+- View history of all previously scanned QR Codes
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installing
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Clone/download the repository.
+- Run `flutter pub get` to install dependencies.
+- Run `flutter run` to run the app.
