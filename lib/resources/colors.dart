@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Color scheme
-const primaryColor = Color(0xff03045e);
-const accentColor = Color(0xffF72585);
+const primaryColor = Color(0xff002651);
+const accentColor = Color(0xffff304f);
 
 /// General widget colors
 const unselectedTabColor = Colors.white38;
