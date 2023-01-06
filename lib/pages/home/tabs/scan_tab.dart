@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:scanner_go/resources/colors.dart';
 import 'package:scanner_go/resources/strings.dart';
 
 class ScanTab extends StatelessWidget {
@@ -25,7 +26,7 @@ class ScanTab extends StatelessWidget {
               },
               onPermissionSet: (controller, hasPermissions) {},
               overlay: QrScannerOverlayShape(
-                borderColor: Colors.red,
+                borderColor: primaryColor,
                 borderRadius: 10,
                 borderLength: 30,
                 borderWidth: 10,
